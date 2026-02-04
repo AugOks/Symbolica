@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 // ignore: constant_identifier_names
@@ -57,19 +62,68 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+Future<void> writeJsonFile(Map<String, dynamic> data, String filename) async {
+  // Get the app's document directory
+  final directory = await getApplicationDocumentsDirectory();
+  final path = '${directory.path}/$filename';
+  final file = File(path);
+  final String data = await rootBundle.loadString('assets/data.json');
+  //print(data);
+  // Convert data to JSON string and write
+  String jsonString = jsonEncode(data);
+  await file.writeAsString(jsonString);
+}
+
+Future<Map<String, dynamic>?> readJsonFile(String filename) async {
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = '${directory.path}/$filename';
+    final file = File(path);
+    
+    // Read file and parse JSON
+    String contents = await file.readAsString();
+    return jsonDecode(contents);
+  } catch (e) {
+    print('Error reading file: $e');
+    return null;
+  }
+}
+
 
 class _MyHomePageState extends State<MyHomePage> {
   bool showBox = false;
-    double boxHeight = 0.5;
+  double boxHeight = 0.5;
+  String symbol = "";
+  String description = "";
 
-  void toggleBox() {
+  
+
+  Map<String, dynamic>? equationData;
+
+  @override
+  void initState() {
+    super.initState();
+    loadEquationData();
+  }
+
+  void loadEquationData() async {
+    final data = await readJsonFile('data.json');
+    setState(() {
+      equationData = data;
+    });
+  }
+
+  void toggleBox(String symbol, String description) {
     setState(() {
       showBox = !showBox;
+      this.symbol = symbol;
+      this.description = description;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -92,8 +146,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    margin: EdgeInsets.only(bottom: 20),
                     child: Text(
-                      "Schrödinger\'s Equation",
+                      "Schrödinger's Equation",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -103,29 +158,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox("i", "The imaginary unit, satisfying i² = -1."),
                         child: Math.tex(
                           r'i',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox(r'\hbar', "Reduced Planck constant, a fundamental physical constant."),
                         child: Math.tex(
                           r'\hbar',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox( r'\frac{\partial}{\partial t}', "Partial derivative with respect to time, indicating how a function changes over time."),
                         child: Math.tex(
                           r'\frac{\partial}{\partial t}',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox(r'\Psi(\mathbf{r},t)', "The wave function, describing the quantum state of a system."),
                         child: Math.tex(
                           r'\Psi(\mathbf{r},t)',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
@@ -133,14 +189,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Math.tex(r'='),
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox(r'\hat{H}', "The Hamiltonian operator, representing the total energy of a quantum system."),
                         child: Math.tex(
                           r'\hat{H}',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => toggleBox(),
+                        onTap: () => toggleBox(r'\Psi(\mathbf{r},t)', "The wave function, describing the quantum state of a system."),
                         child: Math.tex(
                           r'\Psi(\mathbf{r},t)',
                           textStyle: TextStyle(fontSize: FONT_SIZE),
@@ -193,15 +249,39 @@ class _MyHomePageState extends State<MyHomePage> {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade400,
                         borderRadius: BorderRadius.circular(10),
-                      ), // BoxDecoration
-                    ), // Container
-                  ], // children
-                ), // Column
-              ), // Container
-            ), // GestureDetector
+                      ),
+                       // BoxDecoration
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: Math.tex(
+                       symbol,
+                        textStyle: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          
+                          
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        description,
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    
+
+                  ], 
+                ), 
+              ), 
+            ),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

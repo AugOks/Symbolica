@@ -1,0 +1,79 @@
+[
+    {
+        "symbols":[
+            "i\\hbar",
+            "\\frac{\\partial}{\\partial t}",
+            "\\Psi(\\mathbf{r}, t)",
+            "\\frac{\\hbar^2}{2m}",
+            "\\nabla^2",
+            "V(\\mathbf{r})",
+            "\\Psi(\\mathbf{r}, t)"
+        ],
+        "symbol_names": [
+            "i",
+            "h-bar",
+            "partial derivative with respect to time",
+            "Psi of r and t",
+            "h-bar squared over 2m",
+            "Laplacian operator",
+            "V of r",
+            "Psi of r and t"
+        ],
+        "symbol_descriptions": [
+            "The imaginary unit, which is used in complex numbers.",
+            "The reduced Planck constant, a fundamental constant in quantum mechanics.",
+            "Represents the rate of change of the wave function with respect to time.",
+            "The wave function, which describes the quantum state of a particle.",
+            "Represents the kinetic energy term in the equation.",
+            "The Laplacian operator, which represents the spatial variation of the wave function.",
+            "The potential energy term in the equation."
+        ],
+        "description": "Schrödinger's equation is a fundamental equation in quantum mechanics that describes how the quantum state of a physical system changes over time. It is a partial differential equation that relates the wave function (Ψ) of a particle to its energy and potential. The equation can be used to predict the behavior of particles at the quantum level, such as electrons in an atom."
+    },
+    {
+        "symbols": [
+            "E",
+            "=",
+            "mc^2"
+        ],
+        "symbol_names": [
+            "E",
+            "equals",
+            "m",
+            "c squared"
+        ],
+        "symbol_descriptions": [
+            "Energy, which is the capacity to do work.",
+            "Indicates that the left-hand side is equal to the right-hand side.",
+            "Mass, which is a measure of the amount of matter in an object.",
+            "The speed of light squared, which is a constant in physics."
+        ],
+        "description": "Einstein's mass-energy equivalence formula states that energy (E) is equal to mass (m) multiplied by the speed of light (c) squared. This equation implies that mass can be converted into energy and vice versa, which is a fundamental principle in physics. It has profound implications for our understanding of the universe, including the processes that power stars and the potential for nuclear energy."
+    },
+    {
+        "symbols": [
+            "\\nabla",
+            "\\cdot",
+            "\\mathbf{E}",
+            "=",
+            "\\frac{\\rho}{\\varepsilon_0}"
+        ],
+        "symbol_names": [
+            "nabla",
+            "dot",
+            "E",
+            "equals",
+            "rho",
+            "epsilon naught"
+        ],
+        "symbol_descriptions": [
+            "The nabla symbol, which represents the vector differential operator.",
+            "The dot product, which indicates a scalar product between two vectors.",
+            "The electric field, which represents the force per unit charge at a point in space.",
+            "Indicates that the left-hand side is equal to the right-hand side.",
+            "Charge density, which represents the amount of electric charge per unit volume.",
+            "The permittivity of free space, a fundamental constant in electromagnetism."
+        ],
+        "description": "Gauss's law for electricity states that the electric flux through a closed surface is proportional to the charge enclosed within that surface. In this equation, ∇·E represents the divergence of the electric field (E), ρ is the charge density, and ε₀ is the permittivity of free space. This law is one of Maxwell's equations, which form the foundation of classical electromagnetism."
+    }
+]
